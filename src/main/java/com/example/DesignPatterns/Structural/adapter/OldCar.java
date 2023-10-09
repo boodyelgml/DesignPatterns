@@ -1,6 +1,6 @@
 package com.example.DesignPatterns.Structural.adapter;
 
-public interface GazCar {
+public interface OldCar {
     void start();
     void stop();
 }

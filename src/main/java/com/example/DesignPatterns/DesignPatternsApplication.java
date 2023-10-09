@@ -1,5 +1,6 @@
 package com.example.DesignPatterns;
 
+import com.example.DesignPatterns.Behavioral.command.ClientWritePlatformService;
 import com.example.DesignPatterns.Behavioral.iterator.MyIterator;
 import com.example.DesignPatterns.Behavioral.chainOfResponsibility.HighLevelEmployee;
 import com.example.DesignPatterns.Behavioral.chainOfResponsibility.LowLevelEmployee;
@@ -20,6 +21,24 @@ import com.example.DesignPatterns.Behavioral.template.GTA;
 import com.example.DesignPatterns.Behavioral.visitor.AGM;
 import com.example.DesignPatterns.Behavioral.visitor.Tanmeyah;
 import com.example.DesignPatterns.Behavioral.visitor.TaxesVisitorImpl;
+import com.example.DesignPatterns.Creational.abstractfactory.BootstrapFormBuilder;
+import com.example.DesignPatterns.Creational.abstractfactory.Button;
+import com.example.DesignPatterns.Creational.abstractfactory.FormBuilder;
+import com.example.DesignPatterns.Creational.abstractfactory.TextBox;
+import com.example.DesignPatterns.Creational.builder.Student;
+import com.example.DesignPatterns.Creational.builder.StudentBuilder;
+import com.example.DesignPatterns.Creational.factory.Shape;
+import com.example.DesignPatterns.Creational.factory.ShapeFactory;
+import com.example.DesignPatterns.Creational.prototype.Person;
+import com.example.DesignPatterns.Structural.adapter.Lanos;
+import com.example.DesignPatterns.Structural.adapter.OldCarAdapter;
+import com.example.DesignPatterns.Structural.bridge.*;
+import com.example.DesignPatterns.Structural.decorator.CheesePizza;
+import com.example.DesignPatterns.Structural.decorator.ChickenPizza;
+import com.example.DesignPatterns.Structural.decorator.Pizza;
+import com.example.DesignPatterns.Structural.decorator.SimplePizza;
+import com.example.DesignPatterns.Structural.proxy.Image;
+import com.example.DesignPatterns.Structural.proxy.ProxyImage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
@@ -27,12 +46,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DesignPatternsApplication {
     public static void main(String[] args) throws InterruptedException {
 
-        /**
-         *
-         *
-         * Behavioral Patterns
-         *
-         */
+        //<editor-fold desc="Behavioral Patterns">
 
         System.out.println("------- observer pattern -------");
         Observable ahmed = new AhmedObservable();
@@ -115,5 +129,65 @@ public class DesignPatternsApplication {
 
         Tanmeyah tanmeyah = new Tanmeyah();
         tanmeyah.acceptVisit(new TaxesVisitorImpl());
+
+        System.out.println("------- command pattern -------");
+        // Check ClientController
+        //</editor-fold>
+
+        //<editor-fold desc="Creational Patterns">
+
+        System.out.println("------- Adapter pattern -------");
+        OldCarAdapter oldCarAdapter = new OldCarAdapter(new Lanos());
+        oldCarAdapter.on();
+        oldCarAdapter.off();
+
+
+        System.out.println("------- Bridge pattern -------");
+        Team barca = new Barcelona(new Messi());
+        barca.startPlaying();
+        Team psg = new PSG(new Neymar());
+        psg.startPlaying();
+
+
+        System.out.println("------- Decorator pattern -------");
+        Pizza pizza = new SimplePizza();
+        CheesePizza cheesePizza = new CheesePizza(pizza);
+        ChickenPizza chickenPizza = new ChickenPizza(cheesePizza);
+        System.out.println(chickenPizza.price());
+        System.out.println(chickenPizza.name());
+
+
+        System.out.println("------- Proxy pattern -------");
+        Image image = new ProxyImage("real image");
+        image.display();
+        //</editor-fold>
+
+        //<editor-fold desc="Creational Patterns">
+        System.out.println("------- Builder pattern -------");
+        Student student = new StudentBuilder().withName("student name from builder").withAge(20).build();
+        System.out.println(student.getName());
+
+
+        System.out.println("------- Factory pattern -------");
+        Shape shape = ShapeFactory.createShape("Circle");
+        shape.draw();
+
+
+        System.out.println("------- Abstract Factory pattern -------");
+        FormBuilder builder = new BootstrapFormBuilder();
+        Button button = builder.createButton();
+        button.click();
+
+
+        TextBox textBox = builder.createTextBox();
+        textBox.typeText();
+
+
+        System.out.println("------- Prototype pattern -------");
+        Person person = new Person("ahmed", 20);
+        Person newPerson = person.clone();
+        System.out.println(person);
+        System.out.println(newPerson);
+        //</editor-fold>
     }
 }
